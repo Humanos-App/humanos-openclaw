@@ -11,9 +11,6 @@ metadata:
       env:
         - VIA_API_KEY
         - VIA_SIGNATURE_SECRET
-      bins:
-        - curl
-        - jq
     os:
       - darwin
       - linux
@@ -68,9 +65,9 @@ Set `VIA_PROTECTED_TOOLS` to a comma-separated list of tool name patterns that r
 
 ## Requirements
 
-- `curl` and `jq` on PATH
 - VIA Protocol API credentials (VIA_API_KEY, VIA_SIGNATURE_SECRET)
 - Optional: VIA_API_URL to override the default `https://api.humanos.id`
+- Node.js 18+ (uses native fetch API)
 
 ## Installation
 

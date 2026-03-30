@@ -7,9 +7,13 @@ via_curl() {
   local body="${3:-}"
   local base_url="${VIA_API_URL:-https://api.humanos.id}"
   
-  # Timestamp em ms
+  # Timestamp em ms (13 dígitos)
   local timestamp
-  timestamp="$(( $(date +%s) * 1000 ))"
+  if date +%s%3N 2>/dev/null | grep -qE '^[0-9]{13}$'; then
+    timestamp="$(date +%s%3N)"
+  else
+    timestamp="$(( $(date +%s) * 1000 ))"
+  fi
   
   # Payload: timestamp.body (com ponto)
   local sign_payload

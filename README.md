@@ -115,7 +115,14 @@ Or install locally:
 
 ```bash
 git clone https://github.com/Humanos-App/humanos-openclaw.git
-ln -s $(pwd)/humanos ~/.openclaw/skills/humanos
+cd humanos-openclaw
+./scripts/setup-openclaw.sh
+```
+
+Manual setup:
+
+```bash
+ln -s $(pwd)/humanos-openclaw ~/.openclaw/skills/humanos
 ```
 
 ## Configure
@@ -237,6 +244,18 @@ openclaw hooks enable humanos-guard
 
 This listens for `tool.pre` events and blocks sensitive operations (payments, transfers, signing) unless a valid mandate exists.
 
+## Testing
+
+Run the built-in test suite:
+
+```bash
+# Offline argument validation tests (no API key needed)
+./scripts/test-all.sh
+
+# Full integration tests (requires API credentials)
+VIA_API_KEY=your-key VIA_SIGNATURE_SECRET=your-secret ./scripts/test-all.sh
+```
+
 ## Security
 
 - All requests signed with HMAC-SHA256
@@ -244,6 +263,16 @@ This listens for `tool.pre` events and blocks sensitive operations (payments, tr
 - No local data storage
 - W3C Verifiable Credentials with EdDSA proofs
 - OTP verification for all approval flows
+- No shell command execution in hooks (native fetch API)
+
+## Regulatory Compliance
+
+Mandate signatures are W3C Verifiable Credentials, enabling compliance with:
+
+- **PSD2** — Strong Customer Authentication for payments
+- **GDPR** — Verifiable consent for data processing
+- **HIPAA** — Auditable authorization for healthcare data access
+- **eIDAS** — Compatible with EU Digital Identity Wallet
 
 ## Requirements
 
@@ -251,6 +280,14 @@ This listens for `tool.pre` events and blocks sensitive operations (payments, tr
 - `curl`, `jq`, and `openssl` on PATH
 - VIA Protocol API key from [app.humanos.id](https://app.humanos.id)
 - Optional: `VIA_API_URL` only if you need a non-default API base URL
+
+## Links
+
+- [Humanos Dashboard](https://app.humanos.id)
+- [API Documentation](https://humanos.mintlify.app/essentials/introduction)
+- [OpenClaw](https://openclaw.ai)
+- [ClawHub](https://clawhub.ai/lagosrui/humanos-openclaw)
+- [VIA Protocol](https://github.com/Humanos-App/agent-mandate-protocol)
 
 ## License
 

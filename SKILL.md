@@ -1,7 +1,7 @@
 ---
 name: humanos
 description: Require verifiable human approval before high-risk agent actions.
-version: 0.1.1
+version: 1.0.0
 homepage: https://github.com/Humanos-App/humanos-openclaw
 user-invocable: true
 metadata:
