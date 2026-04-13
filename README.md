@@ -128,7 +128,7 @@ ln -s $(pwd)/humanos-openclaw ~/.openclaw/skills/humanos
 ## Configure
 
 1. Get an API key from [app.humanos.id](https://app.humanos.id)
-2. Add credentials to `~/.openclaw/openclaw.json`:
+2. Add credentials to `~/.openclaw/openclaw.json` and secure the file:
 
 ```json
 {
@@ -144,6 +144,10 @@ ln -s $(pwd)/humanos-openclaw ~/.openclaw/skills/humanos
     }
   }
 }
+```
+
+```bash
+chmod 600 ~/.openclaw/openclaw.json
 ```
 
 3. Verify the skill loads:
@@ -259,11 +263,12 @@ VIA_API_KEY=your-key VIA_SIGNATURE_SECRET=your-secret ./scripts/test-all.sh
 ## Security
 
 - All requests signed with HMAC-SHA256
-- API keys stored in environment variables only
-- No local data storage
+- API keys read from environment variables at runtime, never hardcoded in scripts
+- When using OpenClaw, credentials are managed via `~/.openclaw/openclaw.json` — set secure file permissions (`chmod 600 ~/.openclaw/openclaw.json`)
 - W3C Verifiable Credentials with EdDSA proofs
 - OTP verification for all approval flows
-- No shell command execution in hooks (native fetch API)
+- Guard hook uses native fetch API (Node.js 18+), no shell command execution
+- No application data is stored locally by this skill
 
 ## Regulatory Compliance
 
@@ -278,6 +283,7 @@ Mandate signatures are W3C Verifiable Credentials, enabling compliance with:
 
 - [OpenClaw](https://openclaw.ai) installed
 - `curl`, `jq`, and `openssl` on PATH
+- `node` 18+ on PATH (required for the optional guard hook)
 - VIA Protocol API key from [app.humanos.id](https://app.humanos.id)
 - Optional: `VIA_API_URL` only if you need a non-default API base URL
 

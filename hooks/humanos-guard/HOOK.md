@@ -11,6 +11,8 @@ metadata:
       env:
         - VIA_API_KEY
         - VIA_SIGNATURE_SECRET
+      bins:
+        - node
     os:
       - darwin
       - linux
